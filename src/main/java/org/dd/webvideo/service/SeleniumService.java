@@ -10,7 +10,15 @@ import java.io.File;
 
 public class SeleniumService {
 
-    public File getUrlScreenshot(String url, int width, int height){
+    private final int width;
+    private final int height;
+
+    public SeleniumService(int width, int height){
+        this.width = width;
+        this.height = height;
+    }
+
+    public File getUrlScreenshot(String url){
         DesiredCapabilities caps = new DesiredCapabilities();
         RemoteWebDriver driver = new PhantomJSDriver(caps);
 

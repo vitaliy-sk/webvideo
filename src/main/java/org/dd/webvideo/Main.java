@@ -25,8 +25,8 @@ public class Main {
         int width = DEFAULT_WIDTH;
         int height = DEFAULT_HEIGHT;
 
-        SeleniumService seleniumService = new SeleniumService();
-        File screenshotFile = seleniumService.getUrlScreenshot(url, width, height);
+        SeleniumService seleniumService = new SeleniumService(width, height);
+        File screenshotFile = seleniumService.getUrlScreenshot(url);
 
         LOG.info(String.format("Screenshot captured to %s", screenshotFile.getAbsolutePath()));
 
