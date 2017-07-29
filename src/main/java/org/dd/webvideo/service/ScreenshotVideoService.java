@@ -58,20 +58,19 @@ public class ScreenshotVideoService {
         int framesRequired = duration * fps;
         double frameOffset = getFrameOffset(sourceImage, framesRequired);
 
+        final MediaPacket packet = MediaPacket.make();
         final Muxer muxer = Muxer.make(outputFilename.getAbsolutePath(), null, formatName);
         final MuxerFormat muxerFormat = muxer.getFormat();
         final Encoder encoder = createEncoder(muxerFormat);
-        final MediaPicture frameMediaPicture = createMediaPicture(encoder);
-        final MediaPacket packet = MediaPacket.make();
-
         muxer.addNewStream(encoder);
         muxer.open(null, null);
 
-        long startTime = System.currentTimeMillis();
+        final MediaPicture frameMediaPicture = createMediaPicture(encoder);
 
         LOG.info(String.format("Start decode. Frames required: %s. Duration: %s sec. Frame offset: %s.", framesRequired, duration, frameOffset));
-
         MediaPictureConverter converter = null;
+
+        long startTime = System.currentTimeMillis();
 
         for (int frameIndex = 0; frameIndex < framesRequired; frameIndex++) {
             logFps(frameIndex, startTime);
@@ -88,6 +87,8 @@ public class ScreenshotVideoService {
 
         flushCache(muxer, encoder, packet);
         muxer.close();
+
+        LOG.info(String.format("Decoding done. Took %s msec", (System.currentTimeMillis() - startTime)));
 
     }
 
