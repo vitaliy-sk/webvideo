@@ -18,7 +18,7 @@ public class Main {
     public static void main(String[] args) {
 
         if (args.length != 2){
-            LOG.severe("Please provide argument. Example: java -jar webvideo.jar <URL> <DURATION_SECONDS>");
+            LOG.severe("Please provide argument. Example: webvideo <URL> <DURATION_SECONDS>");
             System.exit(1);
         }
 
